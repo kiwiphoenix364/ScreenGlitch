@@ -1,6 +1,6 @@
 namespace ScreenGlitch {
 //% block
-//% block="Apply Screen Glitch For 1 Frame With Pixel Size $size"
+//% block="Apply Screen Glitch For 1 Frame With Pixel Spacing $size"
 export function SetBlurFilter(size: number) {
     let y = 0
     let x = 0
@@ -11,7 +11,6 @@ export function SetBlurFilter(size: number) {
     let numheight2 = size
     let buf = Buffer.create(120)
     let variable = scene.createRenderable(zLayer, (image: Image, camera: scene.Camera) => {
-        image.drawRect(0, 0, 159, 119, 0)
         for (let index4 = 0; index4 < 120 / numheight2; index4++) {
             if (120 - y < size) {
                 numheight2 = 120 - y
@@ -21,9 +20,6 @@ export function SetBlurFilter(size: number) {
                     numwidth2 = 160 - x
                 }
                 image.drawLine(x, y, x, numheight2, image.getPixel(x + numwidth2 / 2, y + numheight2 / 2))
-                if (image.getPixel(x, y) > 0) {
-                    image.setPixel(x + 1, y, image.getPixel(x, y))
-                }
                 x += size
                 numwidth2 = size
             }
